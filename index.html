@@ -1,0 +1,220 @@
+<html>
+<head>
+	<title>Turing Tumble</title>
+	<link rel="stylesheet" href="styles.css">
+	<script src="index.js"></script>
+</head>
+<body>
+	<!-- https://www.turingtumble.com/ -->
+	<div id="parts">
+		<button data-part-select="ramp" id="ramp">Ramp</button>
+		<button data-part-select="crossover" id="crossover">Crossover</button>
+		<button data-part-select="bit" id="bit">Bit</button>
+		<button data-part-select="interceptor" id="interceptor">Interceptor</button>
+		<button data-part-select="gearBit" id="gearBit" disabled>Gear Bit</button>
+	</div>
+	<div id="board">
+		<table>
+			<thead>
+				<td class="blue" colspan="4"><label>Blue:
+					<input
+						data-color="blue"
+						class="hopper"
+						inputmode="numeric"
+						pattern="[0-9]*"
+						value="8"></label></td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td class="red" colspan="4"><label>Red:
+					<input
+						data-color="red"
+						class="hopper"
+						inputmode="numeric"
+						pattern="[0-9]*"
+						value="8"></label></td>
+			</thead>
+			<tfoot>
+				<td class="blue" colspan="5"><button class="trigger" data-color="blue" id="triggerBlue">Blue Trigger</button></td>
+				<td></td>
+				<td class="red" colspan="5"><button class="trigger" data-color="red" id="triggerRed">Red Trigger</button></td>
+			</tfoot>
+			<tbody>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class="peg"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class="peg"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+					<td class="gear"></td>
+					<td class="peg"></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td class="peg"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+		<div id="output"></div>
+		<button id="clearResults">Clear Results</button>
+		<button id="pause" disabled>Pause</button>
+		<fieldset>
+			<legend>Save</legend>
+			<div>
+				<label>Local Name: <input id="localNameSave"></label>
+			</div>
+			<div>
+				<label>Copy this saved text: <textarea id="saved" disabled></textarea></label>
+			</div>
+			<button id="save">Save</button>
+		</fieldset>
+		<fieldset>
+			<legend>Load Local</legend>
+			<label>Local Name: <input id="localNameLoad"></label>
+			<button id="loadLocal">Load</button>
+		</fieldset>
+		<fieldset>
+			<legend>Load Saved Text</legend>
+			<label>Enter your saved text: <textarea id="savedText"></textarea></label>
+			<button id="loadText">Load</button>
+		</fieldset>
+	</div>
+	<script>
+		(() => {
+			init();
+			window.totalRows = document.querySelectorAll('tbody tr').length;
+			window.totalColumns = document.querySelectorAll('tbody tr')[0].querySelectorAll('td').length;
+		})();
+	</script>
+</body>
+</html>

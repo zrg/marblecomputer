@@ -1,0 +1,46 @@
+#parts { float: left; }
+#parts button { display: block; width: 100px; margin-bottom: 8px; }
+#parts button.active { color: #eee; background-color: #666; }
+td.blue { text-align: right; }
+table { margin: 0 auto; }
+thead label { margin-bottom: 10px; display: block; }
+thead input { width: 100%; }
+td { width: 20px; height: 20px; }
+
+.peg { border: 1px solid black; border-radius: 100%; display: block; }
+.peg[data-part] { border-color: lightgray; }
+
+[data-part] { position: relative; font-size: 36px; }
+[data-part]::before { position: absolute; line-height: 20px; transform: translate(-50%, -50%); left: 50%; top: 50%; }
+
+.peg[data-ball="blue"] { background-color: blue; }
+.peg[data-ball="red"] { background-color: red; }
+
+.peg[data-part="ramp"]::before { color: green; }
+.peg[data-part="ramp"][data-state="left"]::before { content: "\2B0B"; }
+.peg[data-part="ramp"][data-state="right"]::before { content: "\2B0A"; }
+
+.peg[data-part="crossover"] { color: orange; }
+.peg[data-part="crossover"]::before { content: "\2929"; }
+
+.peg[data-part="bit"]::before { color: blue; }
+.peg[data-part="bit"][data-state="left"]::before { content: "\2B0B"; }
+.peg[data-part="bit"][data-state="right"]::before { content: "\2B0A"; }
+
+.peg[data-part="interceptor"] { color: black; }
+.peg[data-part="interceptor"]::before { content: "\2013"; }
+.peg[data-part="interceptor"][data-ball]::before { content: ""; }
+
+.peg[data-part="gearBit"]::before { color: purple; }
+.peg[data-part="gearBit"][data-state="left"]::before { content: "\2B0B"; }
+.peg[data-part="gearBit"][data-state="right"]::before { content: "\2B0A"; }
+
+.gear[data-part="gear"] { color: red; }
+.gear[data-part="gear"]::before { content: "\263C";}
+
+#output span { width: 20px;	height: 20px; border-radius: 100%; float: right; }
+#output span.blue { background-color: blue; }
+#output span.red { background-color: red; }
+
+label, fieldset { margin: 10px; display: block; }
+
