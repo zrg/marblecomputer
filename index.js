@@ -14,6 +14,7 @@ const init = () => {
 	document.querySelector('#save').addEventListener('click', save);
 	document.querySelector('#loadLocal').addEventListener('click', () => load(true));
 	document.querySelector('#loadText').addEventListener('click', () => load(false));
+	document.querySelector('#ramp').click();
 };
 
 const states = {
@@ -62,16 +63,19 @@ const setPart = (event) => {
 
 		if (part && part === newPart) {
 			if (state) {
-				if (newPart === 'gearBit' && gearGroup(el).length) {
-// lock the gearGroup
+				let nextState = states[part][states[part].indexOf(state) + 1];
+				let gearGroup = [el];
+				if (newPart === 'gearBit') {
+					gearGroup = getGearGroup([el]);
+				}
+				if (gearGroup.length > 1) {
+					nextState = nextState || states[part][0];
+					orientGearGroup(el, nextState);
+				} else if (nextState) {
+					el.dataset.state = nextState ;
 				} else {
-					const nextState = states[part][states[part].indexOf(state) + 1];
-					if (nextState) {
-						el.dataset.state = nextState ;
-					} else {
-						el.removeAttribute('data-part');
-						el.removeAttribute('data-state');
-					}
+					el.removeAttribute('data-part');
+					el.removeAttribute('data-state');
 				}
 			} else {
 				el.removeAttribute('data-part');
@@ -91,7 +95,6 @@ const activatePeg = async (row, col, color, inDirection) => {
 	const rowPegs = document.querySelectorAll(`tbody tr:nth-child(${row}) td`);
 	const thisPeg = rowPegs[col-1];
 
-	// if (rowPegs.length && col > 0 && col <= totalColumns) {
 	if (thisPeg) {
 		let nextCol;
 		let comingFrom;
@@ -145,11 +148,11 @@ const activatePeg = async (row, col, color, inDirection) => {
 				if (thisPeg.dataset.state === 'left') {
 					comingFrom = 'right';
 					nextCol = col - 1;
-					thisPeg.dataset.state = 'right';
+					orientGearGroup(thisPeg, 'right');
 				} else if (thisPeg.dataset.state === 'right') {
 					comingFrom = 'left';
 					nextCol = col + 1;
-					thisPeg.dataset.state = 'left';
+					orientGearGroup(thisPeg, 'left');
 				}
 				break;
 			default:
@@ -200,9 +203,40 @@ const start = (color = null) => {
 	}
 };
 
-const gearGroup = (el) => {
-	const thisGroup = [];
-	// if (el.nextElementSibling.dataset.part === '')
+
+const getGearGroup = (gearGroup = []) => {
+	const addNeighbors = (gearGroup = []) => {
+		const getNeighbors = [
+			(el) => el.parentElement.previousElementSibling?.querySelectorAll('td')[el.cellIndex],
+			(el) => el.nextElementSibling,
+			(el) => el.parentElement.nextElementSibling?.querySelectorAll('td')[el.cellIndex],
+			(el) => el.previousElementSibling,
+		];
+		const parts = ['gearBit','gear'];
+		const neighbors = [];
+		gearGroup.forEach(element => getNeighbors.forEach(element$ => neighbors.push(element$(element))));
+
+		const newGearGroup = [];
+		neighbors.forEach(element => {
+			if (parts.includes(element?.dataset?.part) && !gearGroup.includes(element)) {
+				newGearGroup.push(element);
+			}
+		});
+		return newGearGroup.concat(gearGroup);
+	}
+	const newGearGroup = addNeighbors(gearGroup);
+	const oldGearGroup = [...gearGroup];
+
+	if (newGearGroup.length > gearGroup.length) {
+		gearGroup = getGearGroup(newGearGroup);
+	}
+	return gearGroup;
+};
+
+const orientGearGroup = (el, state) => {
+	getGearGroup([el])
+		.filter(element => element.className === 'peg')
+		.forEach(element => element.dataset.state = state);
 };
 
 const initGrid = () => {
