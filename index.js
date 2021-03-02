@@ -161,7 +161,7 @@ const activatePeg = async (row, col, color, inDirection) => {
 		}
 		if ((row === totalRows && col === (totalColumns + 1)/2)
 			|| (row === totalRows - 1 && nextCol !== (totalColumns + 1)/2)) {
-			addToOutput(color, col < (totalColumns/2) ? 'blue' : 'red');
+			addToOutput(color, nextCol < (totalColumns/2) ? 'blue' : 'red');
 		} else {
 			activatePeg(row + 1, nextCol, color, comingFrom);
 		}
