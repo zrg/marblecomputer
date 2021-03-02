@@ -273,7 +273,7 @@ const load = (local) => {
 			alert('localStorage not available');
 		}
 	} else {
-		savedText = document.querySelector('#savedText').value;
+		savedText = document.querySelector('#savedText').value.trim();
 	}
 	const saved = [];
 	JSON.parse(atob(savedText)).forEach(element => {
